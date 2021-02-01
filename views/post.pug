@@ -1,0 +1,16 @@
+extends layout
+
+block variables
+  - var title = post.title
+
+block content
+  h2.text-center= title
+  if post.optionalImage
+    center 
+      img(style='width:100px; height:100px;  vertical-align: middle;' src=post.optionalImage)
+  
+
+  .row
+    .offset-sm-2.col-sm-8
+      .body !{post.body}
+      p.author Written by #{post.authorName}
