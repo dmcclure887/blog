@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require("http-errors");
 const express = require("express");
 const logger = require("morgan");
@@ -11,8 +12,8 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 const client = new okta.Client({
-  orgUrl: "https://dev-95412521.okta.com",
-  token: "00bZq0ph45GqzA-2YM9YFS4nAcS3g0D_yZj11QcC_X"
+  orgUrl: process.env.OKTA_ORG,
+  token: process.env.BLOG_TOKEN
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -25,9 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const oidc = new ExpressOIDC({
-  issuer: "https://dev-95412521.okta.com/oauth2/default",
-  client_id: "0oa4aqw40eLHHdUIN5d6",
-  client_secret: "Tzk1_2yy3c3gczOdSaRUuaPPYDi4T3GyA8Yf9HfN",
+  issuer:  process.env.OKTA_ORG+"/oauth2/default",
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
   redirect_uri: "http://localhost:3000/users/callback",
   scope: "openid profile",
   routes: {
